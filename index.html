@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Face Mask Detection</title>
+</head>
+<body>
+    <h1 style="text-align: center; background-color:#B139FA">Face Mask Detector Model</h1>
+
+    <div class="container">
+        <!-- Image Upload Section -->
+        <div class="section" style="background-color:#8DBCFB">
+            <h2>Image Upload for Mask Detection</h2>
+            <form method="POST" action="/upload" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <button type="submit">Upload</button>
+            </form>
+            
+            {% if result_image %}
+                <h3>Processed Image:</h3>
+                <img src="data:image/jpeg;base64,{{ result_image }}" alt="Processed Image" width="300">
+            {% endif %}
+            
+            {% if results %}
+                <h3>Detection Results:</h3>
+                <ul>
+                    {% for label, confidence in results %}
+                        <li>{{ label }}: {{ confidence }}%</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- Live Video Stream Section -->
+        <div class="section" style="background-color:#F4BF81">
+            <h2>Live Mask Detection</h2>
+            <div style="text-align: center; margin-bottom: 10px;">
+                <button onclick="window.location.href='/start_video'">Start Video</button>
+                <button onclick="window.location.href='/stop_video'">Stop Video</button>
+            </div>
+            <div>
+                <img src="/video_feed" width="640" height="480" alt="Live Video Feed">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
